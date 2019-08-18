@@ -1,0 +1,283 @@
+body{
+	background-color:#f4f4f4;
+	
+	color:#555;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:16px;
+	line-height:1.6em;
+	margin:0;
+	
+
+}
+
+.container{
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+}
+
+#main-header{
+	background-color:coral;
+	color:#fff;
+}
+
+#navbar{
+	height: 40px;
+	background-color:#414141;
+	color:#fff;
+}
+
+.logo{
+	float: left;
+	margin-top: -5px;
+	
+	max-width: calc(100% - 15% - 20px);
+}
+
+.logo img{
+	max-width: 100%;
+	height: 56px;
+}
+
+#navbar ul{
+	float: right;
+	padding:0;
+	margin-top: 10px;
+	list-style: none;
+	text-align: right;
+}
+
+#navbar li{
+	display:inline;
+}
+
+#navbar li img{
+	display:inline;
+	text-align: left;
+}
+
+
+#navbar a{
+	color:#fff;
+	text-decoration: none;
+	font-size:16px;
+	font-weight: bold;
+	padding: 8px;
+}
+
+#navbar a:hover{
+	color: lightskyblue;
+	border-bottom: 3px #aaa solid;
+}
+
+
+#microService{
+
+	background-image:url('../images/bgimage2.png');
+	
+	background-position: center;
+	min-width: 800px;
+	height: auto;
+	background-repeat: repeat-y;
+	background-size:cover;
+	text-align: center;
+	
+	
+	
+}
+
+#showcase{
+	background-image:url('../images/bgimage.jpg');
+	background-position: bottom;
+	
+	min-width: 800px;
+	height: 640px;
+	text-align: center;
+}
+
+#showcase h1{
+	color: #fff;
+	font-size:50px;
+	line-height: 1.6em;
+	padding-top: 50px;
+	text-align: center;
+}
+
+#showcase img{
+	padding: 20px;
+	padding-top: 30px;
+}
+
+#showcase img:hover{
+	border-bottom: 3px #aaa solid;
+}
+
+
+/*Input Block*/
+#inputservice{
+	float: left;
+	width: 30%;
+	border: 1.5px #ccc solid;
+	padding: 20px 20px;
+	border-radius:15px;
+	text-align: left;
+	background-color: #777;
+}
+
+#inputservice h2{
+	text-align: center;
+	color: #fff;
+}
+
+
+#inputservice img{
+	margin-top: 5px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+#inputservice label{
+	font-weight: bold;
+	display:block;
+	color: #fff;
+}
+
+#inputservice input[type="text"]{
+	padding:5px 0px;
+	width:100%;
+}
+
+#getservice{
+	margin-top:10px;
+	border: 1px #fff solid;
+	border-radius:5px;
+	background-color: #fff;
+	color: black;
+	padding: 5px 5px;
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+}
+
+#getservice:hover{
+	margin-top:10px;
+	border: 1px navy solid;
+	border-radius:5px;
+	background-color: navy;
+	color: #fff;
+	padding: 5px 5px;
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+}
+/*Code Block*/
+.learnMore{
+	background: #666;
+	border: 1px solid #ffffff;
+	color: white;  
+	text-decoration: none;
+	text-align: center;
+	padding: 5px 10px;
+}
+
+.learnMore:hover{
+	background: dodgerblue;
+}
+
+#code-panel{
+	float: right;
+	width: 60%;
+	border: 1.5px #ccc solid;
+	padding: 10px;
+	border-radius:15px;
+	margin-bottom: none;
+	text-align: left;
+}
+
+#code-panel h2{
+	color: #fff;
+	text-align: left;
+	padding-left: 20px; 
+}
+
+#code-panel h3{
+	color: #fff;
+	text-align: right;
+	padding-right: 20px; 
+}
+
+
+/*pre code{
+    background-color: #e9e9e9;
+	border-radius: 5px;
+	margin-bottom: none;
+	font-size: 16px;
+	color: #555;
+    line-height: 1.45;
+    overflow: auto;
+	padding: 5px 20px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}*/
+
+pre{
+	background-color: #e9e9e9;
+	border-radius: 5px;
+	font-family: monospace, monospace;
+	text-align: left;
+	overflow: auto;
+	padding: 0px 10px;
+	padding-left: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}
+
+
+
+/**********************************************************************/
+#main{
+	float:left;
+	width:70%;
+	padding:0 30px;
+	box-sizing: border-box;
+}
+
+#sidebar{
+	float:right;
+	width:30%;
+	background: #333;
+	color:#fff;
+	padding:10px;
+	box-sizing: border-box;
+}
+
+#main-footer{
+	background: #333;
+	color:#fff;
+	text-align: center;
+	padding: 8px 5px 8px 5px;
+}
+
+@media(max-width:600px){
+	#main{
+		width:100%;
+		float:none;
+	}
+
+	#sidebar{
+		width:100%;
+		float:none;
+	}
+}

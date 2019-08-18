@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <h1 style='display:flexbox;margin-left:350px;margin-top:50px;'>Help to check your manifest.yml</h1>
+    <div class="was-validated">
+        <div class="mb-3" style='display: flex;flex-direction: row;justify-content: space-around;margin-top:20px'>      
+            <div>
+                    <textarea class="form-control" id='inpumani'  placeholder='---
+applications:
+- name: demo
+  memory: 256MB
+  disk_quota: 256MB
+  buildpack: python_buildpack
+  command: python index.py
+services:
+- mongodb-demo
+  rabbitmq' 
+                      style='width:300px;height:300px;' required>---
+applications:
+- name: demo
+  memory: 256MB
+  disk_quota: 256MB
+  buildpack: python_buildpack
+  command: python index.py
+services:
+- mongodb-demo
+  rabbitmq </textarea>
+                    <div class="invalid-feedback">Please enter your 'manifest.yml' config.</div>
+                    <button  id='buttmani'>Let's check</button>
+            </div> 
+            
+            <div class="list-group" id="display_error" style='width:600px;height:200px;'>
+                    
+            </div>
+        </div>
+        
+
+    </div>
+
+    
+
+    
+            
+</body>
+
+<script>
+ $(document).ready(()=>{
+    const display_error = $("#display_error");
+    // display_error.empty();
+    
+    $("#buttmani").click(()=>{
+        
+        display_error.empty();
+        var inpumani = $("#inpumani").val()
+
+        let temp = {}
+        inpumani.split("\n").forEach((data)=>{
+            let [k,v]=data.trim().split(":",2);
+            temp[k.trim()]=v;
+        })
+        console.log(temp)
+        
+        //判斷每一個: 後面是否有加空格
+
+        
+        // if(temp['buildpack'].indexOf(" ") === -1  || temp['memory'].indexOf(" ") === -1 || temp['disk_quota'].indexOf(" ") === -1 || temp['- name'].indexOf(" ") === -1 || temp['command'].indexOf(" ") === -1)
+        // {
+        //     // console.log("Any attributes must have the space in any \":\" ex:-name: demo ")
+        //     display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">Any attributes must have the space in any \":\" symbol ex:-name: demo </a>`)
+        // }
+        if(temp['buildpack'])
+        {
+            if(temp['buildpack'].indexOf(" ") !== 0)
+            {
+                console.log('buildpack lose space')
+            }
+        }
+        
+        //判斷memroy和disk_quota是否缺少單位
+        if(temp['memory'])
+        {
+            
+            if((temp['memory'].indexOf("M")!== -1 || temp['memory'].indexOf("G") !== -1 || temp['memory'].indexOf("m")!== -1 || temp['memory'].indexOf("g")!== -1) )
+            {
+                //判斷是否缺少空格
+                if(temp['memory'].indexOf(" ") !== 0 )
+                {
+                console.log('memory lose space')
+                }
+            }
+            else{
+                display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">Memory must have a unit of measurement like M, MB, G, or GB ex: memroy: 125M</a>`)
+            
+            }
+        }
+        
+        if(temp['disk_quota'])
+        {
+            if((temp['disk_quota'].indexOf("M")!== -1 || temp['disk_quota'].indexOf("G") !== -1 || temp['disk_quota'].indexOf("m")!== -1 || temp['disk_quota'].indexOf("g")!== -1) )
+            {
+                //判斷是否缺少空格
+                if(temp['disk_quota'].indexOf(" ") !== 0)
+                {
+                    console.log('disk_quota lose space')
+                }
+            }
+            else{
+                display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">Disk_quota must have a unit of measurement like M, MB, G, or GB ex: memroy: 125M</a>`)
+            }
+        }
+        if(temp['- name'])
+        {
+            
+            if(temp['- name'].indexOf(" ") !== 0)
+            {
+                console.log('- name must have a space')
+            }
+        }
+        if(temp['command'])
+        {
+            
+            if(temp['command'].indexOf(" ") === -1 || temp['command'].indexOf(" ")!== 0)
+            {
+                console.log('command must have a space')
+            }
+        }
+        //判斷是否缺少數字
+        if( !(/\d/gi.test(temp['memory'])) &&  !(temp['memory'] == ''|| !temp['memory']) ){
+    
+            // console.log('Memory must have a positive integer with a unit of measurement like M, MB, G, or GB ex: memroy: 125M');
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">Memory must have a positive integer with a unit of measurement like M, MB, G, or GB ex: memroy: 125M</a>`)
+        }
+    
+        if(!(/\d/gi.test(temp['disk_quota'])) &&  !(temp['disk_quota'] == ''|| !temp['disk_quota']) ){
+            
+            // console.log('Disk_quota must have a positive integer with a unit of measurement like M, MB, G, or GB ex: disk_quota: 125M');
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">Disk_quota must have a positive integer with a unit of measurement like M, MB, G, or GB ex: disk_quota: 125M</a>`)
+        }
+        
+        //判斷是否有缺少元素，或是有打錯。
+        if(temp['applications'] != '')
+        {
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">You need to have the applications:</a>`)
+        }
+        if(temp['buildpack']=='' || !temp['buildpack'])
+        {
+            //console.log('not find buildbpak config use \"cf buildpacks\" find buildpacks and add it ex:\'buildpacks: nodejs_buildpack\'')
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">No find buildbpack config use \"cf buildpacks\" find buildpack and add it ex: buildpack: nodejs_buildpack</a>`)
+        }
+        if(temp['memory'] == ''|| !temp['memory'])
+        {
+            //console.log('no find memory config you can add  ex: memory: 125M ')
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">No find memory config you can add  ex: memory: 125M </a>`)
+         
+        } 
+        if(temp['disk_quota'] == ''|| !temp['disk_quota'])
+        {
+            //console.log('no find disk_quota config you can add  ex: disk_quota: 125M ')
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">No find disk_quota config you can add  ex: disk_quota: 125M </a>`)
+        } 
+        if(temp['- name'] == '' || !temp['- name'])
+        {
+            //console.log('no find application name config you can add  ex:-name : example-hello-world')
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">No find application name config you can add  ex: -name : example-hello-world </a>`)
+        } 
+        if(temp['command'] == '' || !temp['command']) 
+        {
+            //console.log('no find command config if you use nodejs can add ex:command:node index.js')
+            display_error.append(`<a href="#" class="list-group-item list-group-item-action list-group-item-danger">No find command config if you use nodejs can add ex:command:node index.js </a>`)
+        }
+
+        //找出manifest中有哪些services。
+        if(temp['services'] == '')
+        {
+            
+            var data=inpumani.split("services:")[1].trim().replace('-',' ')
+            
+            var temp2 = data.split("\n")
+            var services = []
+            for(var i=0;i<temp2.length;i++)
+            {
+                if(temp2[i].indexOf(" ")!== -1  )
+                {
+                    services.push(temp2[i].trim())
+                }
+                else
+                {
+                    break;
+                }
+            }
+            console.log(services)            
+        }
+        
+        
+    })
+ })    
+    
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quick Start Portal</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script>
+		var ssoUri = 'https://portal-sso.wise-paas.io';
+		var redirectUriAfterLogin = 'https://mywebsite.wise-paas.io';
+		var redirectUriAfterLogout = 'https://mywebsite.wise-paas.io';
+		var isLogin;
+	</script>
+			  
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<header id="main-header">
+		
+		
+	</header>
+
+    <nav id="navbar">	
+			<div class="container">
+				<div class="logo">
+					<img src="images/wise-paas-logo.png" alt="Wise-PaaS Logo">
+				</div>
+				<!---->
+				<div>
+					<ul>
+						<li><a href="https://mywebsite.wise-paas.io">Home</a></li>
+						<li><a href="https://www.advantech.tw/" target="_blank">About</a></li>
+						<li><a href="https://www.advantech.tw/embedded-boards-design-in-services/wisepaas" target="_blank">Services</a></li>
+						<script>
+							
+						</script>
+						<li id="loginNav"><a href="https://portal-sso.wise-paas.io/web/signIn.html?redirectUri=https://mywebsite.wise-paas.io">Login</a></li>
+						<li id="logoutNav"><a href="https://portal-sso.wise-paas.io/web/signOut.html?redirectUri=https://mywebsite.wise-paas.io">Logout</a></li>
+					</ul>
+				</div>
+				
+			</div>
+		</nav>
+
+	<section id="showcase">
+		<div class="container">
+			<h1>Quick Start to WISE-PaaS</h1>
+		</div>
+		<div class="container">
+			<a href = "#" class="genSource1"><img class="icon" src="images/device.png" alt="device"></a>
+			<a href = "#" class="genSource2"><img class="icon" src="images/cloud.png" alt="cloud"></a>
+			<a href = "#" class="genSource3"><img class="icon" src="images/database.png" alt="database"></a>
+			<a href = "#" class="genSource4"><img class="icon" src="images/application.png" alt="application"></a>
+		</div>
+	</section>
+
+	<script>
+		$(document).ready(function(){
+			$.ajax({
+				url: ssoUri + '/v2.0/users/me',
+				method: 'GET',
+				xhrFields: {
+					withCredentials: true
+				}
+			}).done(function(){
+				isLogin = true;
+				$("#loginNav").hide();
+				$("#logoutNav").show();
+			}).fail(function(){
+				isLogin = false;
+				$("#loginNav").show();
+				$("#logoutNav").hide();
+			})
+		});
+		$('.genSource1').click(function () {
+			console.log(window.location)
+			if(isLogin){window.location.href = "device.html";}
+			else {
+				alert('Please login');
+				
+				device_link=document.location.origin+'/device.html'
+				window.location.href = ssoUri + `/web/signIn.html?redirectUri=${device_link}`;
+				// window.location.href = ssoUri + '/web/signIn.html?redirectUri=?redirectUri=https://mywebsite.wise-paas.io';}
+			}
+		});
+		$('.genSource2').click(function () {
+		
+		if(isLogin){window.location.href = "check.html";}
+		else {
+			alert('Please login');
+			device_link=document.location.origin+'/check.html'
+			window.location.href = ssoUri + `/web/signIn.html?redirectUri=${device_link}`;
+			// window.location.href = ssoUri + '/web/signIn.html?redirectUri=?redirectUri=https://mywebsite.wise-paas.io';}
+		}
+	});
+	</script>
+	<!--
+	<div class="container">
+		<section id="main">
+			<h1>Welcome</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		</section>
+		<aside id="sidebar">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud </p>
+		</aside>
+	</div>-->
+	
+	<footer id="main-footer">
+		<p>Copyright &copy; 2019 Advantech</p>
+	</footer>
+</body>
+</html>

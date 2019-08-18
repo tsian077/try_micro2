@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Device Connectivity</title>
+    <script>
+        var ssoUri = 'https://portal-sso.wise-paas.io';
+        var redirectUriAfterLogin = 'https://mywebsite.wise-paas.io';
+        var redirectUriAfterLogout = 'https://mywebsite.wise-paas.io';
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>          
+    
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+        <nav id="navbar">	
+            <div class="container">
+                <div class="logo">
+                    <img src="images/wise-paas-logo.png" alt="Wise-PaaS Logo">
+                </div>
+                <!---->
+                <div>
+                    <ul>
+                        <li><a href="https://mywebsite.wise-paas.io">Home</a></li>
+                        <li><a href="https://www.advantech.tw/" target="_blank">About</a></li>
+                        <li><a href="https://www.advantech.tw/embedded-boards-design-in-services/wisepaas" target="_blank">Services</a></li>
+                        <li id="loginNav"><a href="https://portal-sso.wise-paas.io/web/signIn.html?redirectUri=https://mywebsite.wise-paas.io">Login</a></li>
+                        <li id="logoutNav"><a href="https://portal-sso.wise-paas.io/web/signOut.html?redirectUri=https://mywebsite.wise-paas.io">Logout</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+        </nav>
+        <section id="microService">
+            <br>
+            <div  class="container">
+                <!--Service Input Form-->
+
+                <div id='inputservice'>
+                        
+                            <img src="images/rabbitmq-logo.png" alt="rabbitmq-logo">
+                            <h2>Generate RabbitMQ Source Code</h2>
+                        
+                            <div class="from-group">
+                                <label>Application Name: </label>
+                                <input class="form-control  " type="text" id="appName" placeholder="myApp"></textarea>
+                                
+                            </div>
+                     
+                             <div class="form-group">
+                                <label>Service Name: </label>
+                                <input class="form-control" type="text" id="serviceName" placeholder="rabbitmq-demo">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label>Service Instance:</label>
+                                <select class="custom-select" id="serviceInstance">
+                                    <option selected>p-rabbitmq</option>
+                                    
+                                    <option value="2">p-rabbitmq-innoworks</option>
+                                    
+                                </select>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label>Application Memory(M):</label>
+                                <input class="form-control" type="number" id='applicationmemory' placeholder="128">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label>Application Disk_quota(M):</label>
+                                <input  class="form-control" type="number" id='applicationdiskquota' placeholder="128">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label>Topic: </label>
+                                <input class="form-control" type="text" id="topic" placeholder="topicName">
+                                
+                            </div>
+
+                            <button id='getservice' class="btn btn-primary">Generate</button> 
+                            <div id='warnings' style='color: red'>value not be empty</div>
+                </div>
+                    
+
+                <!--Code Block-->
+                <div id='code-panel'>
+                        <h2 id="panelTitle">README</h2>
+                        <pre>
+                            <code id="cmdLogin"></code>
+                        </pre>
+                        <pre>
+                            <code id="cmdCS"></code>
+                        </pre>
+                        <div class="sampleSource">
+                            <h2 id="sampleCode">Source Code</h2>
+                            <pre>
+                                <code id="printSrcCode">
+        I'm Source Code</code>
+                            </pre>
+                            <h2 id="sampleManifest">Manifest</h2>
+                            <pre>
+                                <code id="printManifest">
+        I'm Manifest</code>
+                            </pre>
+                            <h3>Do you want to deploy your app? <a class="learnMore" href="#">Learn More</a></h3>
+                        </div>
+                </div>
+                
+            </div>
+            <br>
+            
+        </section>
+        <footer id="main-footer">
+            <p>Copyright &copy; 2019 Advantech</p>
+        </footer>
+    </body>
+
+<script>
+    $(document).ready(()=>{
+        $("#warnings").hide()
+        const sampleText1 = 
+        `
+    Welcome to WISE-PaaS Quick Start Site
+    We provide: 
+        - JavaScript / Python source codes
+        Example: IoT Hub Connection
+
+        - Step-by-Step deploymeny tutorial`;
+
+        const sampleText2 = `
+    The source codes are provided by Advantech,
+    Please do not copy or share without citation.`;
+
+        $("#cmdLogin").text(sampleText1);
+        $("#cmdCS").text(sampleText2);
+        $(".sampleSource").hide();
+
+        $.ajax({
+				url: ssoUri + '/v2.0/users/me',
+				method: 'GET',
+				xhrFields: {
+					withCredentials: true
+				}
+			}).done(function(){
+				isLogin = true;
+				$("#loginNav").hide();
+				$("#logoutNav").show();
+			}).fail(function(){
+				isLogin = false;
+				$("#loginNav").show();
+				$("#logoutNav").hide();
+			})
+        //warning 
+        $("#warning1").hide()
+        $("#warning2").hide()
+        $("#warning3").hide()
+        $("#warning4").hide()
+        $("#warning5").hide()
+
+        
+        $("#getservice").click(()=>{
+           
+            //get input value 
+            var service_name = $("#serviceName").val();
+            var topic = $("#topic").val()
+            var appName = $("#appName").val()
+            var serviceInstance = $("#serviceInstance").val()
+            var applicationmemory = $("#applicationmemory").val()
+            var applicationdiskquota = $("#applicationdiskquota").val()
+           
+            if(service_name === '' || topic === '' || appName === '' || applicationmemory === '' || applicationdiskquota === '')
+            {
+                
+                $("#warnings").show()
+            }
+            else
+            {
+                $("#microService").height("max-content");
+                $(".sampleSource").show();
+                $("#panelTitle").text("Command");
+                $("#warnings").hide()
+                let cookie = {};
+                document.cookie.split(';').forEach(function(el) {
+                    let [k,v] = el.split('=');
+                    cookie[k.trim()] = v;
+                })
+                var account = cookie.WISEUser
+                var hostname = window.location.hostname
+                const loginCmd =`
+        cf login -a api.`+hostname.split('.',3)[1]+`.`+hostname.split('.',3)[2]+` -u `+account + ` -p WISE-PaaS/EnSaaS-password`;
+                $("#cmdLogin").text(loginCmd);
+            
+
+                const csCmd = `
+        cf create-service ${serviceInstance} standard ${service_name}`;
+                $("#cmdCS").text(csCmd)
+        
+                //get api
+                fetch('/indexFile',{method:'POST',headers: {'Content-Type': 'application/json'},body:JSON.stringify({type:'rabbitmq',topic:topic,serviceInstancename:serviceInstance})})
+                .then((res)=>{
+                    res.text()
+                .then((body)=>{
+                    $("#printSrcCode").text(body)
+                })
+        
+                })
+
+            
+                fetch('/manifest',{method:'POST',headers: {'Content-Type': 'application/json'},body:JSON.stringify({appName:appName,serviceName:service_name})})
+                .then((res)=>{
+                  res.text()
+                .then((body)=>{
+                    $("#printManifest").text(body)
+                    })
+                })
+            }
+            
+        })
+    })
+</script>
+
+</html>
+
+
+
+
+

@@ -1,0 +1,7 @@
+---
+applications:
+- name: try_micro
+  memory: 125M
+  disk_quota: 125M
+  builpacks: nodejs_buildpack
+  commond: node index.js 
