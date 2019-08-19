@@ -23,13 +23,13 @@ app.post("/manifest",(req,res)=>{
     
     ---
     applications:
-    - name: ${req.body.appName}
-      memory: 125M
-      disk_quota: 125M
+    - name: ${req.body.app_Name}
+      memory: ${req.body.application_memory}M
+      disk_quota: ${req.body.application_diskqouta}M
       builpacks: nodejs_buildpack
       command: node index.js
       services:
-      - ${req.body.serviceName}
+      - ${req.body.service_name}
       `;
     
     res.send(example_manifest_code);

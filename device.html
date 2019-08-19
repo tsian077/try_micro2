@@ -168,14 +168,14 @@
         $("#getservice").click(()=>{
            
             //get input value 
-            var service_name = $("#serviceName").val();
+            var servicename = $("#serviceName").val();
             var topic = $("#topic").val()
             var appName = $("#appName").val()
             var serviceInstance = $("#serviceInstance").val()
             var applicationmemory = $("#applicationmemory").val()
             var applicationdiskquota = $("#applicationdiskquota").val()
            
-            if(service_name === '' || topic === '' || appName === '' || applicationmemory === '' || applicationdiskquota === '')
+            if(servicename === '' || topic === '' || appName === '' || applicationmemory === '' || applicationdiskquota === '')
             {
                 
                 $("#warnings").show()
@@ -199,7 +199,7 @@
             
 
                 const csCmd = `
-        cf create-service ${serviceInstance} standard ${service_name}`;
+        cf create-service ${serviceInstance} standard ${servicename}`;
                 $("#cmdCS").text(csCmd)
         
                 //get api
@@ -212,8 +212,8 @@
         
                 })
 
-            
-                fetch('/manifest',{method:'POST',headers: {'Content-Type': 'application/json'},body:JSON.stringify({appName:appName,serviceName:service_name})})
+                
+                fetch('/manifest',{method:'POST',headers: {'Content-Type': 'application/json'},body:JSON.stringify({app_Name:appName,service_name:servicename,application_memory:applicationmemory,application_diskqouta:applicationdiskquota})})
                 .then((res)=>{
                   res.text()
                 .then((body)=>{
